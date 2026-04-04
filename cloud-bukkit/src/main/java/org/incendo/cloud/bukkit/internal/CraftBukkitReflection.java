@@ -65,7 +65,7 @@ public final class CraftBukkitReflection {
             if (Bukkit.getServer() != null) {
                 try {
                     final Method getMinecraftVersion = serverClass.getDeclaredMethod("getMinecraftVersion");
-                    fallbackVersion = Integer.parseInt(getMinecraftVersion.invoke(Bukkit.getServer()).toString().split("\\.")[1]);
+                    fallbackVersion = parseMajorRevision(getMinecraftVersion.invoke(Bukkit.getServer()).toString());
                 } catch (final Exception ignored) {
                 }
             } else {
@@ -85,7 +85,7 @@ public final class CraftBukkitReflection {
                     }
                     final String versionName = (String) getName.invoke(currentVersion);
                     try {
-                        fallbackVersion = Integer.parseInt(versionName.split("\\.")[1]);
+                        fallbackVersion = parseMajorRevision(versionName);
                     } catch (final Exception ignored) {
                     }
                 } catch (final ReflectiveOperationException e) {
@@ -100,6 +100,16 @@ public final class CraftBukkitReflection {
         name = name.substring(PREFIX_CRAFTBUKKIT.length());
         name = name.substring(0, name.length() - CRAFT_SERVER.length());
         CB_PKG_VERSION = name;
+    }
+
+    private static int parseMajorRevision(final @NonNull String versionName) {
+        final String[] components = versionName.split("\\.");
+        if (components.length == 0) {
+            throw new IllegalArgumentException("Empty version name");
+        }
+        // Version lines before 26.x use 1.<revision>.*, while 26.x+ uses <revision>.<minor>.*.
+        final int major = Integer.parseInt(components[0]);
+        return major == 1 && components.length > 1 ? Integer.parseInt(components[1]) : major;
     }
 
     @SafeVarargs
