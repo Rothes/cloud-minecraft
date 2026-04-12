@@ -66,6 +66,7 @@ class EnchantmentArgumentTest extends ServerTest {
                 try {
                     Enchantment.registerEnchantment(mockEnchantment);
                 } catch (final Exception ignored) {
+                    // ignore
                 }
             }
         }

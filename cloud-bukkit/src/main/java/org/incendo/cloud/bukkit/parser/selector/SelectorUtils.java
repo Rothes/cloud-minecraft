@@ -138,15 +138,15 @@ final class SelectorUtils {
     private abstract static class SelectorParser<C, T> implements ArgumentParser.FutureArgumentParser<C, T>, SelectorMapper<T>,
             SuggestionProvider<C> {
 
-        protected static final Supplier<Object> NO_PLAYERS_EXCEPTION_TYPE =
+        static final Supplier<Object> NO_PLAYERS_EXCEPTION_TYPE =
                 Suppliers.memoize(() -> findExceptionType("argument.entity.notfound.player"));
-        protected static final Supplier<Object> NO_ENTITIES_EXCEPTION_TYPE =
+        static final Supplier<Object> NO_ENTITIES_EXCEPTION_TYPE =
                 Suppliers.memoize(() -> findExceptionType("argument.entity.notfound.entity"));
 
         private final @Nullable ArgumentParser<C, T> modernParser;
 
         // Hide brigadier references in inner class
-        protected static final class Thrower {
+        static final class Thrower {
 
             private final Object type;
 
@@ -159,14 +159,14 @@ final class SelectorUtils {
             }
         }
 
-        protected SelectorParser(
+        SelectorParser(
                 final boolean single,
                 final boolean playersOnly
         ) {
             this.modernParser = createModernParser(single, playersOnly, this);
         }
 
-        protected CompletableFuture<ArgumentParseResult<T>> legacyParse(
+        CompletableFuture<ArgumentParseResult<T>> legacyParse(
                 final CommandContext<C> commandContext,
                 final CommandInput commandInput
         ) {
@@ -176,7 +176,7 @@ final class SelectorUtils {
             ));
         }
 
-        protected @NonNull Iterable<@NonNull Suggestion> legacySuggestions(
+        @NonNull Iterable<@NonNull Suggestion> legacySuggestions(
                 final CommandContext<C> commandContext,
                 final CommandInput input
         ) {

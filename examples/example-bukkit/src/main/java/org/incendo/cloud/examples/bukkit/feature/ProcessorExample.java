@@ -82,14 +82,13 @@ public final class ProcessorExample {
                 return;
             }
             final CommandSender sender = context.commandContext().sender();
-            if (!(sender instanceof Player)) {
+            if (!(sender instanceof Player p)) {
                 return;
             }
-            final Player player = (Player) sender;
-            if (player.getInventory().getBoots() != null) {
+            if (p.getInventory().getBoots() != null) {
                 return;
             }
-            player.sendMessage("You need to wear boots to execute this command!");
+            p.sendMessage("You need to wear boots to execute this command!");
             ConsumerService.interrupt();
         }
     }

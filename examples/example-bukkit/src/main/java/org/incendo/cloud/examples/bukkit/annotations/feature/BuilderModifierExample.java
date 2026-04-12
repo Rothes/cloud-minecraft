@@ -70,10 +70,10 @@ public final class BuilderModifierExample implements AnnotationFeature {
 
         @Override
         public boolean test(final @NonNull CommandSender commandSender) {
-            if (!(commandSender instanceof Player)) {
+            if (!(commandSender instanceof Player p)) {
                 return true;
             }
-            return ((Player) commandSender).getGameMode() == this.requiredGameMode;
+            return p.getGameMode() == this.requiredGameMode;
         }
     }
 
