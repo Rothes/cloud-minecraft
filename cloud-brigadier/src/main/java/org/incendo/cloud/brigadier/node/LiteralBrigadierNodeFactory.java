@@ -285,6 +285,7 @@ public final class LiteralBrigadierNodeFactory<C, S> implements BrigadierNodeFac
             if (argumentType != null) {
                 return ImmutableArgumentMapping.<S>builder()
                         .argumentType(argumentType)
+                        .suggestionsType(SuggestionsType.CLOUD_SUGGESTIONS)
                         .build();
             }
         }
